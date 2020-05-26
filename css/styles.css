@@ -27,11 +27,14 @@
 	width: 10000px;
 	transition: 1s;
 }
-    .slides:hover {
+    /* .slides:hover {
         transition: none;
-    }
+    } */
     .slides.shifting {
 		transition: left 0.8s ease-out;
+    }
+    .slides:hover {
+		transition: none;
     }
     
 .slide {
@@ -114,3 +117,4 @@
     .prev:hover, .next:hover {
         background-color: #869791;
     }
+

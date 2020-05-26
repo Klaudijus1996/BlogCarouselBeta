@@ -1,3 +1,4 @@
+
 var slider = document.getElementById('slider'),
     sliderItems = document.getElementById('slides'),
     prev = document.getElementById('prev'),
@@ -60,9 +61,9 @@ function slide(wrapper, items, prev, next) {
       allowShift = true;
       
 
-      // items.appendChild(cloneSec);
-      // items.appendChild(cloneThird);
   items.appendChild(cloneFir);
+  items.appendChild(cloneSec);
+  items.appendChild(cloneThird);
   items.insertBefore(cloneLas, firstSlide);
   wrapper.classList.add('loaded');
   
@@ -85,13 +86,28 @@ function slide(wrapper, items, prev, next) {
  
 
   /*************/
-  // let initSlides = setInterval(function(){shiftSlide(1);}, 1500);
-  // $('#slides').mouseover(function(){
-  //   clearInterval(initSlides);
-  // }).mouseout(function(){
-  //   initSlides = setInterval(function(){shiftSlide(1);}, 1500);
-  // })
-
+  let initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+  $('#slides').mouseover(function(){
+    clearInterval(initSlides);
+  }).mouseout(function(){
+    initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+  })
+//   intTest()
+//   function intTest() {
+//   let testSlides = setInterval(testInt, 1);
+//   let testPos = 0;
+//   let testSlide = document.querySelector('.slides');
+//   function testInt() {
+//     if (index == slidesLength-1) {
+//       index = 0;
+//       testSlide.style.left = (posInitial - slideSize - 15 ) + "px";
+//     } else {
+//       index++
+//       testSlide.style.left = (posInitial - slideSize - 15 ) + "px";
+//     }
+//   }
+//   checkIndex()
+// }
 
   
   function dragStart (e) {
@@ -134,7 +150,7 @@ function slide(wrapper, items, prev, next) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
-  shiftSlide()
+
   function shiftSlide(dir, action) {
     items.classList.add('shifting');
     
@@ -148,7 +164,6 @@ function slide(wrapper, items, prev, next) {
         items.style.left = (posInitial + slideSize + 15) + "px";
         index--;      
       }
-      items.style.left = `${posInitial - slideSize - 15}`;
     };
     allowShift = false;
     checkIndex ();
@@ -163,13 +178,13 @@ function slide(wrapper, items, prev, next) {
     }
 
     if (index == slidesLength) {
-      items.style.left = -(1 * slideSize/slideSize) + "px";
+      items.style.left = -(0 * slideSize/slideSize) + "px";
       index = 0;
     }
     
     allowShift = true;
   }
-
+  console.log(index)
 }
 
 slide(slider, sliderItems, prev, next);
