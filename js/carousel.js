@@ -4,40 +4,40 @@ var slider = document.getElementById('slider'),
     prev = document.getElementById('prev'),
     next = document.getElementById('next');
     /** CLONING **/
-    // function myFunction() {
-    //   let slides = sliderItems.querySelectorAll('.slide');
-    //   firstSlide = slides[0],
-    //   secondSlide = slides[1],
-    //   thirdSlide = slides[2],
-    //   cloneFirst = firstSlide.cloneNode(true),
-    //   cloneSecond = secondSlide.cloneNode(true),
-    //   cloneThird = thirdSlide.cloneNode(true),
+    function myFunction() {
+      let slides = sliderItems.querySelectorAll('.slide');
+      firstSlide = slides[0],
+      secondSlide = slides[1],
+      thirdSlide = slides[2],
+      cloneFirst = firstSlide.cloneNode(true),
+      cloneSecond = secondSlide.cloneNode(true),
+      cloneThird = thirdSlide.cloneNode(true),
   
-    //   document.querySelector(".slides").appendChild(cloneFirst);
-    //   document.querySelector(".slides").appendChild(cloneSecond);
-    //   document.querySelector(".slides").appendChild(cloneThird);
-    // } 
-    // myFunction()
+      document.querySelector(".slides").appendChild(cloneFirst);
+      document.querySelector(".slides").appendChild(cloneSecond);
+      document.querySelector(".slides").appendChild(cloneThird);
+    } 
+    myFunction()
     // /** INSERT.BEFORE **/
 
-    // function anotherFunction() {
-    //   let slides = sliderItems.querySelectorAll('.slide')
-    //   beforeSlide1 = slides[3];
-    //   beforeSlide2 = slides[2];
-    //   beforeSlide3 = slides[1];
-    //   beforeSlide4 = slides[0];
+    function anotherFunction() {
+      let slides = sliderItems.querySelectorAll('.slide')
+      beforeSlide1 = slides[3];
+      beforeSlide2 = slides[2];
+      beforeSlide3 = slides[1];
+      // beforeSlide4 = slides[0];
 
-    //   clonedSlide1 = beforeSlide1.cloneNode(true);
-    //   clonedSlide2 = beforeSlide2.cloneNode(true);
-    //   clonedSlide3 = beforeSlide3.cloneNode(true);
-    //   clonedSlide4 = beforeSlide4.cloneNode(true);
+      clonedSlide1 = beforeSlide1.cloneNode(true);
+      clonedSlide2 = beforeSlide2.cloneNode(true);
+      clonedSlide3 = beforeSlide3.cloneNode(true);
+      // clonedSlide4 = beforeSlide4.cloneNode(true);
       
-    //   document.querySelector('.slides').insertBefore(clonedSlide4, slides[0]);
-    //   document.querySelector('.slides').insertBefore(clonedSlide3, slides[0]);
-    //   document.querySelector('.slides').insertBefore(clonedSlide2, slides[0]);
-    //   document.querySelector('.slides').insertBefore(clonedSlide1, slides[0]);
-    // }
-    // anotherFunction()
+      // document.querySelector('.slides').insertBefore(clonedSlide4, slides[0]);
+      document.querySelector('.slides').insertBefore(clonedSlide3, slides[0]);
+      document.querySelector('.slides').insertBefore(clonedSlide2, slides[0]);
+      document.querySelector('.slides').insertBefore(clonedSlide1, slides[0]);
+    }
+    anotherFunction()
 
 
 function slide(wrapper, items, prev, next) {
@@ -49,9 +49,9 @@ function slide(wrapper, items, prev, next) {
       slides = items.querySelectorAll('.slide'),
       slideSize = items.getElementsByClassName('slide')[0].offsetWidth,
       slidesLength = slides.length,
-      firstSlide = slides[0],
-      secondSlide = slides[1],
-      thirdSlide = slides[2],
+      // firstSlide = slides[0],
+      // secondSlide = slides[1],
+      // thirdSlide = slides[2],
       lastSlide = slides[slidesLength -1],
       cloneFir = firstSlide.cloneNode(true),
       cloneSec = secondSlide.cloneNode(true),
@@ -61,10 +61,10 @@ function slide(wrapper, items, prev, next) {
       allowShift = true;
       
 
-  items.appendChild(cloneFir);
-  items.appendChild(cloneSec);
-  items.appendChild(cloneThird);
-  items.insertBefore(cloneLas, firstSlide);
+  // items.appendChild(cloneFir);
+  // items.appendChild(cloneSec);
+  // items.appendChild(cloneThird);
+  // items.insertBefore(cloneLas, firstSlide);
   wrapper.classList.add('loaded');
   
   // Mouse events
@@ -84,13 +84,14 @@ function slide(wrapper, items, prev, next) {
   // Transition events
   items.addEventListener('transitionend', checkIndex);
  
+  items.classList.add('transition');
 
   /*************/
-  let initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+  let initSlides = setInterval(function(){shiftSlide(4);}, 1500);
   $('#slides').mouseover(function(){
     clearInterval(initSlides);
   }).mouseout(function(){
-    initSlides = setInterval(function(){shiftSlide(1);}, 1500);
+    initSlides = setInterval(function(){shiftSlide(4);}, 1500);
   })
 //   intTest()
 //   function intTest() {
@@ -151,22 +152,64 @@ function slide(wrapper, items, prev, next) {
     document.onmousemove = null;
   }
 
-  function shiftSlide(dir, action) {
-    items.classList.add('shifting');
+  function shiftSlide(whereToShift, action, noscroll) {
+    if (!noscroll) {
+      items.classList.add('shifting');
+      items.style.transition = "1s";
+    }
     
+    const moveToRight = whereToShift > 0;
+    const moveToLeft = whereToShift < 0;
+    
+    if ((index > 3) && moveToRight) {
+      //disableSlideTransitionEffect();
+      shiftSlide(-4, undefined, true);
+      //enableSlideTransitionEffect();
+      return;
+    }
+
+    const howMany = Math.abs(whereToShift);
+
     if (allowShift) {
       if (!action) { posInitial = items.offsetLeft; }
 
-      if (dir == 1) {
-        items.style.left = (posInitial - slideSize - 15 ) + "px";
-        index++;
-      } else if (dir == -1) {
-        items.style.left = (posInitial + slideSize + 15) + "px";
-        index--;      
+      const slideSizeWithMargin = slideSize + 15;
+      const overallSizeToShift = slideSizeWithMargin * howMany;
+
+      if (moveToRight) {
+        items.style.left = (posInitial - overallSizeToShift ) + "px";
+        index += howMany;
+        /*if (index > 6) {
+          items.style.left = parseInt(items.style.left) + (4 * slideSizeWithMargin) + "px";
+          index -= howMany;
+          // shiftSlide(-4);
+        }*/
+        //items.style.left = (posInitial - slideSize - 15 ) + "px";
+        // index++;
+      } else if (moveToLeft) { 
+        if (noscroll) items.style.transition = "none";//disableSlideTransitionEffect();
+        items.style.left = (posInitial + overallSizeToShift ) + "px";
+        items.offsetHeight;
+        if (noscroll) items.style.transition = "1s"; //enableSlideTransitionEffect();
+        index -= howMany;
+        //items.style.left = (posInitial + slideSize + 15) + "px";
+        // index--;
       }
     };
     allowShift = false;
     checkIndex ();
+  }
+
+  function disableSlideTransitionEffect() {
+    items.classList.remove('transition');
+    items.classList.remove('shifting');
+    items.classList.add('disable-css-transitions');
+  }
+  
+  function enableSlideTransitionEffect() {
+    items.classList.add('transition');
+    items.classList.add('shifting');
+    items.classList.remove('disable-css-transitions');
   }
     
   function checkIndex (){

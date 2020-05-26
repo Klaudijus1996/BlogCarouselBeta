@@ -25,14 +25,26 @@
     left: -350px;
 	top: 0;
 	width: 10000px;
-	transition: 1s;
+	/* transition: 1s; */
 }
+
+/* .transition {
+    transition: 1s;
+} */
+
+.disable-css-transitions {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+}
+
     /* .slides:hover {
         transition: none;
     } */
-    .slides.shifting {
+    /*.slides.shifting {
 		transition: left 0.8s ease-out;
-    }
+    }*/
     .slides:hover {
 		transition: none;
     }
@@ -44,7 +56,7 @@
 	 display: flex;
 	 flex-direction: column;
 	 justify-content: center;
-	 transition: all 1s;
+	 /* transition: all 1s; */
 	 position: relative;
      border-radius: 2px;
      text-align: left;
