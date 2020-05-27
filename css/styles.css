@@ -22,15 +22,10 @@
 .slides {
     display: flex;
     position: relative;
-    left: -350px;
+    left: -1095px;
 	top: 0;
 	width: 10000px;
-	/* transition: 1s; */
 }
-
-/* .transition {
-    transition: 1s;
-} */
 
 .disable-css-transitions {
     -webkit-transition: none !important;
@@ -42,9 +37,9 @@
     /* .slides:hover {
         transition: none;
     } */
-    /*.slides.shifting {
+    .slides.shifting {
 		transition: left 0.8s ease-out;
-    }*/
+    }
     .slides:hover {
 		transition: none;
     }
@@ -53,10 +48,10 @@
      margin-right: 15px;
      width: 350px;
 	 cursor: pointer;
-	 display: flex;
+     display: flex;
+     /* left: -1095; */
 	 flex-direction: column;
 	 justify-content: center;
-	 /* transition: all 1s; */
 	 position: relative;
      border-radius: 2px;
      text-align: left;

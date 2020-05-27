@@ -49,9 +49,6 @@ function slide(wrapper, items, prev, next) {
       slides = items.querySelectorAll('.slide'),
       slideSize = items.getElementsByClassName('slide')[0].offsetWidth,
       slidesLength = slides.length,
-      // firstSlide = slides[0],
-      // secondSlide = slides[1],
-      // thirdSlide = slides[2],
       lastSlide = slides[slidesLength -1],
       cloneFir = firstSlide.cloneNode(true),
       cloneSec = secondSlide.cloneNode(true),
@@ -61,10 +58,7 @@ function slide(wrapper, items, prev, next) {
       allowShift = true;
       
 
-  // items.appendChild(cloneFir);
-  // items.appendChild(cloneSec);
-  // items.appendChild(cloneThird);
-  // items.insertBefore(cloneLas, firstSlide);
+  
   wrapper.classList.add('loaded');
   
   // Mouse events
@@ -93,22 +87,6 @@ function slide(wrapper, items, prev, next) {
   }).mouseout(function(){
     initSlides = setInterval(function(){shiftSlide(4);}, 1500);
   })
-//   intTest()
-//   function intTest() {
-//   let testSlides = setInterval(testInt, 1);
-//   let testPos = 0;
-//   let testSlide = document.querySelector('.slides');
-//   function testInt() {
-//     if (index == slidesLength-1) {
-//       index = 0;
-//       testSlide.style.left = (posInitial - slideSize - 15 ) + "px";
-//     } else {
-//       index++
-//       testSlide.style.left = (posInitial - slideSize - 15 ) + "px";
-//     }
-//   }
-//   checkIndex()
-// }
 
   
   function dragStart (e) {
@@ -169,7 +147,7 @@ function slide(wrapper, items, prev, next) {
     }
 
     const howMany = Math.abs(whereToShift);
-
+    console.log(howMany)
     if (allowShift) {
       if (!action) { posInitial = items.offsetLeft; }
 
@@ -177,20 +155,20 @@ function slide(wrapper, items, prev, next) {
       const overallSizeToShift = slideSizeWithMargin * howMany;
 
       if (moveToRight) {
-        items.style.left = (posInitial - overallSizeToShift ) + "px";
-        index += howMany;
-        /*if (index > 6) {
-          items.style.left = parseInt(items.style.left) + (4 * slideSizeWithMargin) + "px";
-          index -= howMany;
+        items.style.left = (posInitial - slideSizeWithMargin ) + "px";
+        index ++;//= howMany;
+        if (index > 6) {
+          items.style.left = parseInt(items.style.left) + slideSizeWithMargin + "px";
+          index --;//= howMany;
           // shiftSlide(-4);
-        }*/
+        }
         //items.style.left = (posInitial - slideSize - 15 ) + "px";
         // index++;
       } else if (moveToLeft) { 
-        if (noscroll) items.style.transition = "none";//disableSlideTransitionEffect();
+        if (noscroll) items.style.transition = "none";
         items.style.left = (posInitial + overallSizeToShift ) + "px";
         items.offsetHeight;
-        if (noscroll) items.style.transition = "1s"; //enableSlideTransitionEffect();
+        if (noscroll) items.style.transition = "1s";
         index -= howMany;
         //items.style.left = (posInitial + slideSize + 15) + "px";
         // index--;
@@ -200,17 +178,6 @@ function slide(wrapper, items, prev, next) {
     checkIndex ();
   }
 
-  function disableSlideTransitionEffect() {
-    items.classList.remove('transition');
-    items.classList.remove('shifting');
-    items.classList.add('disable-css-transitions');
-  }
-  
-  function enableSlideTransitionEffect() {
-    items.classList.add('transition');
-    items.classList.add('shifting');
-    items.classList.remove('disable-css-transitions');
-  }
     
   function checkIndex (){
     items.classList.remove('shifting');
@@ -227,7 +194,6 @@ function slide(wrapper, items, prev, next) {
     
     allowShift = true;
   }
-  console.log(index)
 }
 
 slide(slider, sliderItems, prev, next);
