@@ -4,7 +4,7 @@ var slider = document.getElementById('slider'),
     prev = document.getElementById('prev'),
     next = document.getElementById('next');
     /** CLONING **/
-    function myFunction() {
+    function cloneToBack() {
       let slides = sliderItems.querySelectorAll('.slide');
       firstSlide = slides[0],
       secondSlide = slides[1],
@@ -17,27 +17,24 @@ var slider = document.getElementById('slider'),
       document.querySelector(".slides").appendChild(cloneSecond);
       document.querySelector(".slides").appendChild(cloneThird);
     } 
-    myFunction()
+    cloneToBack()
     // /** INSERT.BEFORE **/
 
-    function anotherFunction() {
+    function cloneToFront() {
       let slides = sliderItems.querySelectorAll('.slide')
       beforeSlide1 = slides[3];
       beforeSlide2 = slides[2];
       beforeSlide3 = slides[1];
-      // beforeSlide4 = slides[0];
 
       clonedSlide1 = beforeSlide1.cloneNode(true);
       clonedSlide2 = beforeSlide2.cloneNode(true);
       clonedSlide3 = beforeSlide3.cloneNode(true);
-      // clonedSlide4 = beforeSlide4.cloneNode(true);
       
-      // document.querySelector('.slides').insertBefore(clonedSlide4, slides[0]);
       document.querySelector('.slides').insertBefore(clonedSlide3, slides[0]);
       document.querySelector('.slides').insertBefore(clonedSlide2, slides[0]);
       document.querySelector('.slides').insertBefore(clonedSlide1, slides[0]);
     }
-    anotherFunction()
+    cloneToFront()
 
 
 function slide(wrapper, items, prev, next) {
@@ -93,7 +90,9 @@ function slide(wrapper, items, prev, next) {
     e = e || window.event;
     e.preventDefault();
     posInitial = items.offsetLeft;
-    
+    if (e) {
+      items.style.transition = 'none'
+    }
     if (e.type == 'touchstart') {
       posX1 = e.touches[0].clientX;
     } else {
@@ -119,8 +118,10 @@ function slide(wrapper, items, prev, next) {
   function dragEnd (e) {
     posFinal = items.offsetLeft;
     if (posFinal - posInitial < -threshold) {
+      items.style.transition = '1s'
       shiftSlide(1, 'drag');
     } else if (posFinal - posInitial > threshold) {
+      items.style.transition = '1s'
       shiftSlide(-1, 'drag');
     } else {
       items.style.left = (posInitial) + "px";
@@ -140,9 +141,7 @@ function slide(wrapper, items, prev, next) {
     const moveToLeft = whereToShift < 0;
     
     if ((index > 3) && moveToRight) {
-      //disableSlideTransitionEffect();
       shiftSlide(-4, undefined, true);
-      //enableSlideTransitionEffect();
       return;
     }
 
@@ -159,11 +158,8 @@ function slide(wrapper, items, prev, next) {
         index ++;//= howMany;
         if (index > 6) {
           items.style.left = parseInt(items.style.left) + slideSizeWithMargin + "px";
-          index --;//= howMany;
-          // shiftSlide(-4);
+          index -= howMany;
         }
-        //items.style.left = (posInitial - slideSize - 15 ) + "px";
-        // index++;
       } else if (moveToLeft) { 
         if (noscroll) items.style.transition = "none";
         items.style.left = (posInitial + overallSizeToShift ) + "px";
