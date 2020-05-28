@@ -1,3 +1,4 @@
+'use strict';
 
 var slider = document.getElementById('slider'),
     sliderItems = document.getElementById('slides'),
@@ -5,13 +6,13 @@ var slider = document.getElementById('slider'),
     next = document.getElementById('next');
     /** CLONING **/
     function cloneToBack() {
-      let slides = sliderItems.querySelectorAll('.slide');
+      let slides = sliderItems.querySelectorAll('.slide'),
       firstSlide = slides[0],
       secondSlide = slides[1],
       thirdSlide = slides[2],
       cloneFirst = firstSlide.cloneNode(true),
       cloneSecond = secondSlide.cloneNode(true),
-      cloneThird = thirdSlide.cloneNode(true),
+      cloneThird = thirdSlide.cloneNode(true);
   
       document.querySelector(".slides").appendChild(cloneFirst);
       document.querySelector(".slides").appendChild(cloneSecond);
@@ -21,13 +22,13 @@ var slider = document.getElementById('slider'),
     // /** INSERT.BEFORE **/
 
     function cloneToFront() {
-      let slides = sliderItems.querySelectorAll('.slide')
-      beforeSlide1 = slides[3];
-      beforeSlide2 = slides[2];
-      beforeSlide3 = slides[1];
+      let slides = sliderItems.querySelectorAll('.slide'),
+      beforeSlide1 = slides[3],
+      beforeSlide2 = slides[2],
+      beforeSlide3 = slides[1],
 
-      clonedSlide1 = beforeSlide1.cloneNode(true);
-      clonedSlide2 = beforeSlide2.cloneNode(true);
+      clonedSlide1 = beforeSlide1.cloneNode(true),
+      clonedSlide2 = beforeSlide2.cloneNode(true),
       clonedSlide3 = beforeSlide3.cloneNode(true);
       
       document.querySelector('.slides').insertBefore(clonedSlide3, slides[0]);
@@ -42,15 +43,10 @@ function slide(wrapper, items, prev, next) {
       posX2 = 0,
       posInitial,
       posFinal,
-      threshold = 100,
+      threshold = 30,
       slides = items.querySelectorAll('.slide'),
       slideSize = items.getElementsByClassName('slide')[0].offsetWidth,
       slidesLength = slides.length,
-      lastSlide = slides[slidesLength -1],
-      cloneFir = firstSlide.cloneNode(true),
-      cloneSec = secondSlide.cloneNode(true),
-      cloneThird = thirdSlide.cloneNode(true),
-      cloneLas = lastSlide.cloneNode(true),
       index = 0,
       allowShift = true;
       
@@ -101,7 +97,7 @@ function slide(wrapper, items, prev, next) {
       document.onmousemove = dragAction;
     }
   }
-
+  
   function dragAction (e) {
     e = e || window.event;
     
@@ -133,7 +129,6 @@ function slide(wrapper, items, prev, next) {
 
   function shiftSlide(whereToShift, action, noscroll) {
     if (!noscroll) {
-      items.classList.add('shifting');
       items.style.transition = "1s";
     }
     
